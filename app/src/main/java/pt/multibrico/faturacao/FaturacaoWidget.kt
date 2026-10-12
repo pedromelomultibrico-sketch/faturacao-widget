@@ -7,7 +7,9 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.view.View
 import android.widget.RemoteViews
+import java.util.Calendar
 import kotlin.concurrent.thread
 
 class FaturacaoWidget : AppWidgetProvider() {
@@ -34,17 +36,34 @@ class FaturacaoWidget : AppWidgetProvider() {
                     views.setTextViewText(R.id.w_mes_val, Fmt.akz(r.mes))
                     views.setTextViewText(R.id.w_ped_dia, Fmt.akz(r.pedroHoje))
                     views.setTextViewText(R.id.w_ped_mes, Fmt.akz(r.pedroMes))
-                    views.setImageViewBitmap(R.id.w_grafico, Grafico.barras(r.pedroMeses))
-                    // topo: meta do Pedro (só a dele) e o progresso das suas vendas do mês
                     if (r.pedroMeta > 0) {
                         val pct = minOf(100, Math.round(r.pedroMes / r.pedroMeta * 100).toInt())
-                        val falta = r.pedroMeta - r.pedroMes
-                        val sufixo = if (falta > 0) " · faltam " + Fmt.akz(falta) else " · meta superada"
                         views.setProgressBar(R.id.w_meta_bar, 100, pct, false)
-                        views.setTextViewText(R.id.w_meta_txt, "Meta Pedro " + Fmt.akz(r.pedroMeta) + " · " + pct + "%" + sufixo)
+                        views.setTextViewText(R.id.w_meta_txt, "Meta Pedro " + Fmt.akz(r.pedroMeta) + " · " + pct + "%")
+
+                        // ritmo: onde devia estar hoje, e o que falta por dia
+                        val cal = Calendar.getInstance()
+                        val dia = cal.get(Calendar.DAY_OF_MONTH)
+                        val diasMes = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
+                        val diasFaltam = diasMes - dia
+                        val previsto = r.pedroMeta * dia / diasMes
+                        val diff = r.pedroMes - previsto
+                        val adianto = if (diff >= 0) "Adiantado " + Fmt.akz(diff) else "Atrasado " + Fmt.akz(-diff)
+                        val falta = r.pedroMeta - r.pedroMes
+                        val prazo = when {
+                            falta <= 0 -> "Meta atingida"
+                            diasFaltam <= 0 -> "Último dia · faltam " + Fmt.akz(falta)
+                            else -> "Faltam " + diasFaltam + " dias · " + Fmt.akz(falta / diasFaltam) + " por dia"
+                        }
+                        views.setImageViewBitmap(R.id.w_grafico, Progresso.barra(r.pedroMes, r.pedroMeta, previsto))
+                        views.setTextViewText(R.id.w_ritmo, adianto + "\n" + prazo)
+                        views.setViewVisibility(R.id.w_grafico, View.VISIBLE)
+                        views.setViewVisibility(R.id.w_ritmo, View.VISIBLE)
                     } else {
                         views.setProgressBar(R.id.w_meta_bar, 100, 0, false)
                         views.setTextViewText(R.id.w_meta_txt, "Sem meta definida.")
+                        views.setViewVisibility(R.id.w_grafico, View.GONE)
+                        views.setViewVisibility(R.id.w_ritmo, View.GONE)
                     }
                     views.setTextViewText(R.id.w_hora, "Atualizado às " + Fmt.hora())
                 } catch (e: Exception) {
