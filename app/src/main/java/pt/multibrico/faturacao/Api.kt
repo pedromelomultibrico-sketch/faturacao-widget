@@ -57,7 +57,7 @@ object Api {
                 j.optDouble("meta", 0.0),
                 pedro?.optDouble("hoje", 0.0) ?: 0.0,
                 pedro?.optDouble("mes", 0.0) ?: 0.0,
-                pedro?.optDouble("meta", 0.0)?.let { _ -> pedro.optDouble("metaKz", 0.0) } ?: 0.0,
+                pedro?.optDouble("metaKz", 0.0) ?: 0.0,
                 meses
             )
         } finally {
