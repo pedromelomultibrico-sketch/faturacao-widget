@@ -6,6 +6,7 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.widget.RemoteViews
 import kotlin.concurrent.thread
 
@@ -15,8 +16,10 @@ class FaturacaoWidget : AppWidgetProvider() {
         // a rede não pode correr na thread principal
         thread {
             val views = RemoteViews(context.packageName, R.layout.widget_faturacao)
+            // toque no widget: abre a faturação na página da Multibrico
             val abrir = PendingIntent.getActivity(
-                context, 0, Intent(context, MainActivity::class.java),
+                context, 0,
+                Intent(Intent.ACTION_VIEW, Uri.parse("https://multibrico15.netlify.app/?faturacao=1")),
                 PendingIntent.FLAG_IMMUTABLE
             )
             views.setOnClickPendingIntent(R.id.widget_root, abrir)
