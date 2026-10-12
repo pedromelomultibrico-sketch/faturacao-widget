@@ -18,8 +18,10 @@ jobs:
           java-version: '17'
       - name: Instalar componentes Android
         run: |
-          yes | sdkmanager --licenses > /dev/null || true
-          sdkmanager "platforms;android-34" "build-tools;34.0.0"
+          SDKM="$(ls -d "$ANDROID_HOME"/cmdline-tools/*/bin | head -n 1)/sdkmanager"
+          echo "A usar: $SDKM"
+          yes | "$SDKM" --licenses > /dev/null || true
+          "$SDKM" "platforms;android-34" "build-tools;34.0.0"
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.7'
