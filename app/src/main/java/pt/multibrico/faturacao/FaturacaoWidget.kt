@@ -32,12 +32,13 @@ class FaturacaoWidget : AppWidgetProvider() {
                     views.setTextViewText(R.id.w_ped_dia, Fmt.akz(r.pedroHoje))
                     views.setTextViewText(R.id.w_ped_mes, Fmt.akz(r.pedroMes))
                     views.setImageViewBitmap(R.id.w_grafico, Grafico.barras(r.pedroMeses))
-                    if (r.meta > 0) {
-                        val pct = minOf(100, Math.round(r.mes / r.meta * 100).toInt())
-                        val falta = r.meta - r.mes
+                    // topo: meta do Pedro (só a dele) e o progresso das suas vendas do mês
+                    if (r.pedroMeta > 0) {
+                        val pct = minOf(100, Math.round(r.pedroMes / r.pedroMeta * 100).toInt())
+                        val falta = r.pedroMeta - r.pedroMes
                         val sufixo = if (falta > 0) " · faltam " + Fmt.akz(falta) else " · meta superada"
                         views.setProgressBar(R.id.w_meta_bar, 100, pct, false)
-                        views.setTextViewText(R.id.w_meta_txt, "Meta " + Fmt.akz(r.meta) + " · " + pct + "%" + sufixo)
+                        views.setTextViewText(R.id.w_meta_txt, "Meta Pedro " + Fmt.akz(r.pedroMeta) + " · " + pct + "%" + sufixo)
                     } else {
                         views.setProgressBar(R.id.w_meta_bar, 100, 0, false)
                         views.setTextViewText(R.id.w_meta_txt, "Sem meta definida.")
