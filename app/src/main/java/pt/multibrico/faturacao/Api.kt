@@ -7,7 +7,16 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-data class Resumo(val hoje: Double, val mes: Double, val meta: Double)
+data class MesValor(val mes: String, val total: Double)
+
+data class Resumo(
+    val hoje: Double,
+    val mes: Double,
+    val meta: Double,
+    val pedroHoje: Double,
+    val pedroMes: Double,
+    val pedroMeses: List<MesValor>
+)
 
 object Api {
     private const val BASE = "https://multibrico15.netlify.app/.netlify/functions/faturacao"
@@ -32,7 +41,23 @@ object Api {
             val texto = stream?.bufferedReader(Charsets.UTF_8)?.use { it.readText() } ?: ""
             if (codigo !in 200..299) throw IllegalStateException("HTTP $codigo")
             val j = JSONObject(texto)
-            return Resumo(j.optDouble("hoje", 0.0), j.optDouble("mes", 0.0), j.optDouble("meta", 0.0))
+            val pedro = j.optJSONObject("pedro")
+            val meses = ArrayList<MesValor>()
+            val arr = j.optJSONArray("pedroMeses")
+            if (arr != null) {
+                for (i in 0 until arr.length()) {
+                    val o = arr.getJSONObject(i)
+                    meses.add(MesValor(o.optString("mes"), o.optDouble("total", 0.0)))
+                }
+            }
+            return Resumo(
+                j.optDouble("hoje", 0.0),
+                j.optDouble("mes", 0.0),
+                j.optDouble("meta", 0.0),
+                pedro?.optDouble("hoje", 0.0) ?: 0.0,
+                pedro?.optDouble("mes", 0.0) ?: 0.0,
+                meses
+            )
         } finally {
             conn.disconnect()
         }
