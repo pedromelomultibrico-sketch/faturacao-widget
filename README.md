@@ -1,2 +1,3 @@
-# faturacao-widget
-App Android simples da faturação da Multibrico, com widget (total do dia, do mês e meta)
+# Faturação Multibrico (widget)
+
+App Android simples com widget de faturação (total do dia, do mês e meta).
