@@ -29,6 +29,9 @@ class FaturacaoWidget : AppWidgetProvider() {
                     val r = Api.resumo(token)
                     views.setTextViewText(R.id.w_dia_val, Fmt.akz(r.hoje))
                     views.setTextViewText(R.id.w_mes_val, Fmt.akz(r.mes))
+                    views.setTextViewText(R.id.w_ped_dia, Fmt.akz(r.pedroHoje))
+                    views.setTextViewText(R.id.w_ped_mes, Fmt.akz(r.pedroMes))
+                    views.setImageViewBitmap(R.id.w_grafico, Grafico.barras(r.pedroMeses))
                     if (r.meta > 0) {
                         val pct = minOf(100, Math.round(r.mes / r.meta * 100).toInt())
                         val falta = r.meta - r.mes
