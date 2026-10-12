@@ -15,6 +15,7 @@ data class Resumo(
     val meta: Double,
     val pedroHoje: Double,
     val pedroMes: Double,
+    val pedroMeta: Double,
     val pedroMeses: List<MesValor>
 )
 
@@ -56,6 +57,7 @@ object Api {
                 j.optDouble("meta", 0.0),
                 pedro?.optDouble("hoje", 0.0) ?: 0.0,
                 pedro?.optDouble("mes", 0.0) ?: 0.0,
+                pedro?.optDouble("meta", 0.0)?.let { _ -> pedro.optDouble("metaKz", 0.0) } ?: 0.0,
                 meses
             )
         } finally {
