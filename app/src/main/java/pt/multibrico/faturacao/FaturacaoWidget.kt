@@ -85,6 +85,8 @@ class FaturacaoWidget : AppWidgetProvider() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == Intent.ACTION_USER_PRESENT) {
             atualizar(context)
+        } else if (intent.action == ACAO_SINCRONIZAR) {
+            sincronizar(context, goAsync())
         } else {
             super.onReceive(context, intent)
         }
