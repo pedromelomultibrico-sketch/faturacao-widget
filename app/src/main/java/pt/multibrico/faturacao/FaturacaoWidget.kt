@@ -21,7 +21,7 @@ class FaturacaoWidget : AppWidgetProvider() {
             // toque no widget: abre a faturação na página da Multibrico
             val abrir = PendingIntent.getActivity(
                 context, 0,
-                Intent(Intent.ACTION_VIEW, Uri.parse("https://multibrico15.netlify.app/?faturacao=1")),
+                Intent(Intent.ACTION_VIEW, Uri.parse("https://multibrico-gestao.pedromelomultibrico.workers.dev")),
                 PendingIntent.FLAG_IMMUTABLE
             )
             views.setOnClickPendingIntent(R.id.widget_root, abrir)
