@@ -93,6 +93,45 @@ class FaturacaoWidget : AppWidgetProvider() {
     }
 
     companion object {
+        const val ACAO_SINCRONIZAR = "pt.multibrico.faturacao.SINCRONIZAR"
+
+        // mostra uma mensagem na linha de baixo do widget, sem mexer no resto
+        private fun aviso(ctx: Context, texto: String) {
+            val mgr = AppWidgetManager.getInstance(ctx)
+            val ids = mgr.getAppWidgetIds(ComponentName(ctx, FaturacaoWidget::class.java))
+            if (ids.isEmpty()) return
+            val v = RemoteViews(ctx.packageName, R.layout.widget_faturacao)
+            v.setTextViewText(R.id.w_hora, texto)
+            mgr.partiallyUpdateAppWidget(ids, v)
+        }
+
+        // Pede ao PC do PHC para enviar já as faturas, espera até ~50 s que ele responda e redesenha.
+        fun sincronizar(ctx: Context, fim: android.content.BroadcastReceiver.PendingResult?) {
+            thread {
+                try {
+                    val token = Prefs.token(ctx)
+                    if (token.isNullOrBlank()) {
+                        aviso(ctx, "Abre a app e cola o link da faturação")
+                    } else {
+                        aviso(ctx, "A pedir ao PC do PHC…")
+                        val desde = Api.pedirAgente(token)
+                        var respondeu = false
+                        val t0 = System.currentTimeMillis()
+                        while (System.currentTimeMillis() - t0 < 50000) {
+                            Thread.sleep(4000)
+                            val q = try { Api.ultimoEnvioAgente(token) } catch (e: Exception) { "" }
+                            if (q.isNotEmpty() && q > desde) { respondeu = true; break }
+                        }
+                        if (respondeu) atualizar(ctx) else aviso(ctx, "O PC do PHC não respondeu. Está ligado?")
+                    }
+                } catch (e: Exception) {
+                    aviso(ctx, "Sem ligação. Toca em ↻ para tentar de novo.")
+                } finally {
+                    try { fim?.finish() } catch (e: Exception) { }
+                }
+            }
+        }
+
         // pede ao sistema para redesenhar todos os widgets desta app
         fun atualizar(ctx: Context) {
             val mgr = AppWidgetManager.getInstance(ctx)
