@@ -25,6 +25,13 @@ class FaturacaoWidget : AppWidgetProvider() {
                 PendingIntent.FLAG_IMMUTABLE
             )
             views.setOnClickPendingIntent(R.id.widget_root, abrir)
+            // botão ↻: pede ao PC do PHC para enviar já as faturas e redesenha o widget quando ele responder
+            val sincronizar = PendingIntent.getBroadcast(
+                context, 1,
+                Intent(context, FaturacaoWidget::class.java).setAction(ACAO_SINCRONIZAR),
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+            )
+            views.setOnClickPendingIntent(R.id.w_atualizar, sincronizar)
 
             val token = Prefs.token(context)
             if (token.isNullOrBlank()) {
