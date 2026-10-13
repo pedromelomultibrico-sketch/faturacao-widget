@@ -74,6 +74,15 @@ class FaturacaoWidget : AppWidgetProvider() {
         }
     }
 
+    // ao desbloquear o telemóvel, pede uma atualização (o sistema atrasa as de 30 em 30 min)
+    override fun onReceive(context: Context, intent: Intent) {
+        if (intent.action == Intent.ACTION_USER_PRESENT) {
+            atualizar(context)
+        } else {
+            super.onReceive(context, intent)
+        }
+    }
+
     companion object {
         // pede ao sistema para redesenhar todos os widgets desta app
         fun atualizar(ctx: Context) {
