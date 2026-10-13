@@ -11,8 +11,9 @@ android {
         applicationId = "pt.multibrico.faturacao"
         minSdk = 26
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        // o número da compilação do GitHub (sobe sempre): é o que a app usa para saber se há versão nova
+        versionCode = System.getenv("GITHUB_RUN_NUMBER")?.toIntOrNull() ?: 1
+        versionName = "1.$versionCode"
     }
 
     // Assinatura fixa: todas as versões são assinadas com a mesma chave,

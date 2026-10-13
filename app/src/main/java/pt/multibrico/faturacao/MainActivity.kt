@@ -1,6 +1,7 @@
 package pt.multibrico.faturacao
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -11,6 +12,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import kotlin.concurrent.thread
 
 class MainActivity : Activity() {
 
@@ -63,6 +65,25 @@ class MainActivity : Activity() {
             "Ligado. O widget atualiza sozinho de meia em meia hora."
         else
             "Ainda não está ligado."
+
+        verificarAtualizacao()
+    }
+
+    // Procura uma versão nova em segundo plano; se houver, pergunta se quer atualizar.
+    private fun verificarAtualizacao() {
+        thread {
+            val nova = try { Atualizacao.procurarNova(this) } catch (e: Exception) { null }
+            if (nova != null) {
+                runOnUiThread {
+                    AlertDialog.Builder(this)
+                        .setTitle("Nova versão disponível")
+                        .setMessage("Há uma versão nova da Faturação. Quer atualizar agora?")
+                        .setPositiveButton("Atualizar") { _, _ -> Atualizacao.descarregarEInstalar(this, nova.second, nova.first) }
+                        .setNegativeButton("Mais tarde", null)
+                        .show()
+                }
+            }
+        }
     }
 
     private fun guardar() {
