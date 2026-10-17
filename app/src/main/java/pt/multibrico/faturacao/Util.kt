@@ -28,6 +28,16 @@ object Fmt {
         return sb.reverse().toString() + " Akz"
     }
 
+    // 47607598 -> "47,6 M Akz"; abaixo de um milhão mostra o número todo
+    fun curto(v: Double): String {
+        val a = Math.abs(v)
+        return when {
+            a >= 1_000_000_000 -> String.format(Locale("pt", "PT"), "%.2f mM Akz", v / 1_000_000_000.0)
+            a >= 1_000_000 -> String.format(Locale("pt", "PT"), "%.1f M Akz", v / 1_000_000.0)
+            else -> akz(v)
+        }
+    }
+
     fun hora(): String = SimpleDateFormat("HH:mm", Locale.US).format(Date())
 }
 
