@@ -62,7 +62,7 @@ class FaturacaoWidget : AppWidgetProvider() {
                         }
                         val falta = r.pedroMeta - r.pedroMes
                         val prazo = when {
-                            falta <= 0 -> "Meta atingida"
+                            falta <= 0 -> "Objetivo atingido"
                             diasFaltam <= 0 -> "Último dia · faltam " + Fmt.curto(falta)
                             else -> "Faltam " + diasFaltam + " dias · " + Fmt.curto(falta / diasFaltam) + " por dia"
                         }
