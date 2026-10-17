@@ -76,6 +76,19 @@ class FaturacaoWidget : AppWidgetProvider() {
                         views.setTextViewText(R.id.w_ritmo, "Sem meta definida.")
                         views.setViewVisibility(R.id.w_grafico, View.GONE)
                     }
+                    // barra do mês da empresa
+                    val calM = Calendar.getInstance()
+                    val diaM = calM.get(Calendar.DAY_OF_MONTH)
+                    val diasMesM = calM.getActualMaximum(Calendar.DAY_OF_MONTH)
+                    if (r.meta > 0) {
+                        val prevM = r.meta * diaM / diasMesM
+                        val pctM = Math.round(r.mes / r.meta * 100).toInt()
+                        views.setTextViewText(R.id.w_mes_info, Fmt.curto(r.mes) + " de " + Fmt.curto(r.meta) + " · " + pctM + "%")
+                        views.setImageViewBitmap(R.id.w_grafico_mes, Progresso.barra(r.mes, r.meta, prevM))
+                    } else {
+                        views.setTextViewText(R.id.w_mes_info, "Dia " + diaM + " de " + diasMesM + " · " + Fmt.curto(r.mes))
+                        views.setImageViewBitmap(R.id.w_grafico_mes, Progresso.barra(diaM.toDouble(), diasMesM.toDouble(), diaM.toDouble(), "hoje", "dia " + diasMesM, "dia 1"))
+                    }
                     views.setTextViewText(R.id.w_hora, "● " + Fmt.hora())
                 } catch (e: Exception) {
                     views.setTextViewText(R.id.w_hora, "Sem ligação. Toca para tentar de novo.")
