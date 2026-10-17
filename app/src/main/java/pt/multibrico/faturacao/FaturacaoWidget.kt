@@ -39,14 +39,12 @@ class FaturacaoWidget : AppWidgetProvider() {
             } else {
                 try {
                     val r = Api.resumo(token)
-                    views.setTextViewText(R.id.w_dia_val, Fmt.akz(r.hoje))
-                    views.setTextViewText(R.id.w_mes_val, Fmt.akz(r.mes))
-                    views.setTextViewText(R.id.w_ped_dia, Fmt.akz(r.pedroHoje))
-                    views.setTextViewText(R.id.w_ped_mes, Fmt.akz(r.pedroMes))
+                    views.setTextViewText(R.id.w_dia_val, Fmt.curto(r.hoje))
+                    views.setTextViewText(R.id.w_mes_val, Fmt.curto(r.mes))
+                    views.setTextViewText(R.id.w_ped_linha, "Hoje " + Fmt.curto(r.pedroHoje) + " · Mês " + Fmt.curto(r.pedroMes))
                     if (r.pedroMeta > 0) {
                         val pct = minOf(100, Math.round(r.pedroMes / r.pedroMeta * 100).toInt())
-                        views.setProgressBar(R.id.w_meta_bar, 100, pct, false)
-                        views.setTextViewText(R.id.w_meta_txt, "Meta Pedro " + Fmt.akz(r.pedroMeta) + " · " + pct + "%")
+                        views.setImageViewBitmap(R.id.w_anel, Progresso.anel(pct, true))
 
                         // ritmo: onde devia estar hoje, e o que falta por dia
                         val cal = Calendar.getInstance()
@@ -55,24 +53,30 @@ class FaturacaoWidget : AppWidgetProvider() {
                         val diasFaltam = diasMes - dia
                         val previsto = r.pedroMeta * dia / diasMes
                         val diff = r.pedroMes - previsto
-                        val adianto = if (diff >= 0) "Adiantado " + Fmt.akz(diff) else "Atrasado " + Fmt.akz(-diff)
+                        if (diff >= 0) {
+                            views.setTextViewText(R.id.w_estado, "▲ Adiantado " + Fmt.curto(diff))
+                            views.setInt(R.id.w_estado, "setBackgroundResource", R.drawable.w_chip_verde)
+                        } else {
+                            views.setTextViewText(R.id.w_estado, "▼ Atrasado " + Fmt.curto(-diff))
+                            views.setInt(R.id.w_estado, "setBackgroundResource", R.drawable.w_chip_vermelho)
+                        }
                         val falta = r.pedroMeta - r.pedroMes
                         val prazo = when {
                             falta <= 0 -> "Meta atingida"
-                            diasFaltam <= 0 -> "Último dia · faltam " + Fmt.akz(falta)
-                            else -> "Faltam " + diasFaltam + " dias · " + Fmt.akz(falta / diasFaltam) + " por dia"
+                            diasFaltam <= 0 -> "Último dia · faltam " + Fmt.curto(falta)
+                            else -> "Faltam " + diasFaltam + " dias · " + Fmt.curto(falta / diasFaltam) + " por dia"
                         }
                         views.setImageViewBitmap(R.id.w_grafico, Progresso.barra(r.pedroMes, r.pedroMeta, previsto))
-                        views.setTextViewText(R.id.w_ritmo, adianto + "\n" + prazo)
+                        views.setTextViewText(R.id.w_ritmo, prazo)
+                        views.setViewVisibility(R.id.w_estado, View.VISIBLE)
                         views.setViewVisibility(R.id.w_grafico, View.VISIBLE)
-                        views.setViewVisibility(R.id.w_ritmo, View.VISIBLE)
                     } else {
-                        views.setProgressBar(R.id.w_meta_bar, 100, 0, false)
-                        views.setTextViewText(R.id.w_meta_txt, "Sem meta definida.")
+                        views.setImageViewBitmap(R.id.w_anel, Progresso.anel(0, false))
+                        views.setViewVisibility(R.id.w_estado, View.GONE)
+                        views.setTextViewText(R.id.w_ritmo, "Sem meta definida.")
                         views.setViewVisibility(R.id.w_grafico, View.GONE)
-                        views.setViewVisibility(R.id.w_ritmo, View.GONE)
                     }
-                    views.setTextViewText(R.id.w_hora, "Atualizado às " + Fmt.hora())
+                    views.setTextViewText(R.id.w_hora, "● " + Fmt.hora())
                 } catch (e: Exception) {
                     views.setTextViewText(R.id.w_hora, "Sem ligação. Toca para tentar de novo.")
                 }
