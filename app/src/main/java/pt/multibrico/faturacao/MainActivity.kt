@@ -66,6 +66,9 @@ class MainActivity : Activity() {
         else
             "Ainda não está ligado."
 
+        // ao abrir a app, o widget vai logo buscar os números (útil depois de uma atualização)
+        if (Prefs.token(this) != null) FaturacaoWidget.atualizar(this)
+
         verificarAtualizacao()
     }
 
