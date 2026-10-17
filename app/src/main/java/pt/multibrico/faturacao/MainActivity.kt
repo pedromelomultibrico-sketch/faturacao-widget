@@ -33,7 +33,7 @@ class MainActivity : Activity() {
             textSize = 22f
         })
         raiz.addView(TextView(this).apply {
-            text = "Cola aqui o link da faturação (o mesmo que enviaste ao colega). A app guarda-o e o widget do ecrã inicial passa a mostrar os totais e a meta."
+            text = "Cola aqui o link da faturação (o mesmo que enviaste ao colega). A app guarda-o e o widget do ecrã inicial passa a mostrar os totais e o objetivo."
             textSize = 14f
             setPadding(0, pad / 2, 0, pad / 2)
         })
