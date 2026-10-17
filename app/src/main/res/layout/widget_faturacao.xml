@@ -216,4 +216,44 @@
         android:layout_height="40dp"
         android:layout_marginTop="6dp"
         android:scaleType="fitCenter" />
+
+    <!-- barra do mês da empresa: faturado vs meta (ou dias do mês, se não houver meta) -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/w_linha" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:shadowColor="#33000000"
+            android:shadowDy="2"
+            android:shadowRadius="2"
+            android:text="Mês da empresa"
+            android:textColor="#22180F"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/w_mes_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text=""
+            android:textColor="#4A4038"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/w_grafico_mes"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="2dp"
+        android:scaleType="fitCenter" />
 </LinearLayout>
