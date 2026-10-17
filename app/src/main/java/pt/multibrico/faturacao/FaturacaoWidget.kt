@@ -73,7 +73,8 @@ class FaturacaoWidget : AppWidgetProvider() {
                     } else {
                         views.setImageViewBitmap(R.id.w_anel, Progresso.anel(0, false))
                         views.setViewVisibility(R.id.w_estado, View.GONE)
-                        views.setTextViewText(R.id.w_ritmo, "Sem meta definida.")
+                        views.setTextViewText(R.id.w_ritmo, "Sem objetivo definido.")
+                        views.setTextViewText(R.id.w_obj_info, "")
                         views.setViewVisibility(R.id.w_grafico, View.GONE)
                     }
                     // barra do mês da empresa
