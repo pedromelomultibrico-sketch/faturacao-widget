@@ -80,7 +80,7 @@ object Progresso {
     }
 
     // Barra da meta: quanto já vendeu e onde devia estar hoje. O rótulo fica por cima, sem tocar na barra.
-    fun barra(real: Double, meta: Double, previsto: Double): Bitmap {
+    fun barra(real: Double, meta: Double, previsto: Double, rotulo: String = "previsto hoje", fimTxt: String = "meta", inicioTxt: String = "0"): Bitmap {
         val w = 800f
         val h = 100f
         val bmp = Bitmap.createBitmap(w.toInt(), h.toInt(), Bitmap.Config.ARGB_8888)
