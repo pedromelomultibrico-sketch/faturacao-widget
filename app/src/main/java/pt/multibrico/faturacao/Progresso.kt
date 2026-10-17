@@ -70,11 +70,11 @@ object Progresso {
         }
         if (temMeta) {
             c.drawText("$p%", s / 2f, s / 2f + 14f, num)
-            c.drawText("da meta", s / 2f, s / 2f + 54f, leg)
+            c.drawText("do objetivo", s / 2f, s / 2f + 54f, leg)
         } else {
             leg.textSize = 34f
             c.drawText("sem", s / 2f, s / 2f - 4f, leg)
-            c.drawText("meta", s / 2f, s / 2f + 34f, leg)
+            c.drawText("objetivo", s / 2f, s / 2f + 34f, leg)
         }
         return bmp
     }
