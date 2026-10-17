@@ -127,9 +127,9 @@ object Progresso {
         c.drawText(rotulo, xr, 22f, txt)
         txt.typeface = Typeface.DEFAULT
         txt.textSize = 20f
-        c.drawText("0", mx, h - 4f, txt)
-        val lm = txt.measureText("meta")
-        c.drawText("meta", w - mx - lm, h - 4f, txt)
+        c.drawText(inicioTxt, mx, h - 4f, txt)
+        val lm = txt.measureText(fimTxt)
+        c.drawText(fimTxt, w - mx - lm, h - 4f, txt)
         return bmp
     }
 }
