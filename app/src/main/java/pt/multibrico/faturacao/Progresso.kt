@@ -122,7 +122,6 @@ object Progresso {
         val txt = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             color = SUAVE; textSize = 24f; typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
         }
-        val rotulo = "previsto hoje"
         val lw = txt.measureText(rotulo)
         val xr = (xp - lw / 2f).coerceIn(mx, w - mx - lw)
         c.drawText(rotulo, xr, 22f, txt)
