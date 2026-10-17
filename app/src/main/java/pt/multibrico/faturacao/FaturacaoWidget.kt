@@ -68,6 +68,7 @@ class FaturacaoWidget : AppWidgetProvider() {
                         }
                         views.setImageViewBitmap(R.id.w_grafico, Progresso.barra(r.pedroMes, r.pedroMeta, previsto))
                         views.setTextViewText(R.id.w_ritmo, prazo)
+                        views.setTextViewText(R.id.w_obj_info, Fmt.curto(r.pedroMes) + " de " + Fmt.curto(r.pedroMeta))
                         views.setViewVisibility(R.id.w_estado, View.VISIBLE)
                         views.setViewVisibility(R.id.w_grafico, View.VISIBLE)
                     } else {
