@@ -84,7 +84,8 @@ class FaturacaoWidget : AppWidgetProvider() {
                     val diasMesM = calM.getActualMaximum(Calendar.DAY_OF_MONTH)
                     // barra do mês do Pedro: dias passados e o que ele já faturou
                     views.setTextViewText(R.id.w_mes_info, "Dia " + diaM + " de " + diasMesM + " · " + Fmt.curto(r.pedroMes))
-                    views.setImageViewBitmap(R.id.w_grafico_mes, Progresso.barra(diaM.toDouble(), diasMesM.toDouble(), diaM.toDouble(), "hoje", "dia " + diasMesM, "dia 1"))
+                    val objDia = if (r.pedroMeta > 0) r.pedroMeta / diasMesM else 0.0
+                      views.setImageViewBitmap(R.id.w_grafico_mes, Grafico.diasDoMes(r.pedroDias, diasMesM, diaM, objDia))
                     views.setTextViewText(R.id.w_hora, "● " + Fmt.hora())
                 } catch (e: Exception) {
                     views.setTextViewText(R.id.w_hora, "Sem ligação. Toca para tentar de novo.")
