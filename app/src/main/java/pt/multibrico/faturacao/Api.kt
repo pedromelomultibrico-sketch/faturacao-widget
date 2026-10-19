@@ -19,7 +19,8 @@ data class Resumo(
     val pedroHoje: Double,
     val pedroMes: Double,
     val pedroMeta: Double,
-    val pedroMeses: List<MesValor>
+    val pedroMeses: List<MesValor>,
+    val pedroDias: List<DiaValor>
 )
 
 object Api {
