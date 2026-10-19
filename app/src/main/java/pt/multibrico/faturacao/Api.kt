@@ -90,6 +90,14 @@ object Api {
                     meses.add(MesValor(o.optString("mes"), o.optDouble("total", 0.0)))
                 }
             }
+            val diasArr = j.optJSONArray("pedroDias")
+            val dias = ArrayList<DiaValor>()
+            if (diasArr != null) {
+                for (i in 0 until diasArr.length()) {
+                    val o = diasArr.getJSONObject(i)
+                    dias.add(DiaValor(o.optInt("dia", 0), o.optDouble("total", 0.0)))
+                }
+            }
             return Resumo(
                 j.optDouble("hoje", 0.0),
                 j.optDouble("mes", 0.0),
