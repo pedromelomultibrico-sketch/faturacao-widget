@@ -87,12 +87,11 @@ object Api {
             if (arr != null) {
                 for (i in 0 until arr.length()) {
                     val o = arr.getJSONObject(i)
-                    meses,
-                  dias.add(MesValor(o.optString("mes"), o.optDouble("total", 0.0)))
+                    meses.add(MesValor(o.optString("mes"), o.optDouble("total", 0.0)))
                 }
             }
-            val diasArr = j.optJSONArray("pedroDias")
             val dias = ArrayList<DiaValor>()
+            val diasArr = j.optJSONArray("pedroDias")
             if (diasArr != null) {
                 for (i in 0 until diasArr.length()) {
                     val o = diasArr.getJSONObject(i)
@@ -106,7 +105,8 @@ object Api {
                 pedro?.optDouble("hoje", 0.0) ?: 0.0,
                 pedro?.optDouble("mes", 0.0) ?: 0.0,
                 pedro?.optDouble("metaKz", 0.0) ?: 0.0,
-                meses
+                meses,
+                dias
             )
         } finally {
             conn.disconnect()
