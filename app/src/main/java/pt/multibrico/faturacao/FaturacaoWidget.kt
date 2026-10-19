@@ -35,7 +35,7 @@ class FaturacaoWidget : AppWidgetProvider() {
 
             val token = Prefs.token(context)
             if (token.isNullOrBlank()) {
-                views.setTextViewText(R.id.w_hora, "Abre a app e cola o link da faturação")
+                views.setTextViewText(R.id.w_hora, "Abre a app e toca em Ligar")
             } else {
                 try {
                     val r = Api.resumo(token)
