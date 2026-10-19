@@ -125,7 +125,7 @@ class FaturacaoWidget : AppWidgetProvider() {
                 try {
                     val token = Prefs.token(ctx)
                     if (token.isNullOrBlank()) {
-                        aviso(ctx, "Abre a app e cola o link da faturação")
+                        aviso(ctx, "Abre a app e toca em Ligar")
                     } else {
                         aviso(ctx, "A pedir ao PC do PHC…")
                         val desde = Api.pedirAgente(token)
