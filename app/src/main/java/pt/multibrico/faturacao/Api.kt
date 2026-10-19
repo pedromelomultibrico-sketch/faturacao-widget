@@ -87,7 +87,8 @@ object Api {
             if (arr != null) {
                 for (i in 0 until arr.length()) {
                     val o = arr.getJSONObject(i)
-                    meses.add(MesValor(o.optString("mes"), o.optDouble("total", 0.0)))
+                    meses,
+                  dias.add(MesValor(o.optString("mes"), o.optDouble("total", 0.0)))
                 }
             }
             val diasArr = j.optJSONArray("pedroDias")
