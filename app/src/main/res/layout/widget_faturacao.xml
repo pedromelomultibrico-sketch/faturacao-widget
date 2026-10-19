@@ -262,7 +262,7 @@
             android:shadowColor="#33000000"
             android:shadowDy="2"
             android:shadowRadius="2"
-            android:text="O meu mês"
+            android:text="O meu dia"
             android:textColor="#22180F"
             android:textSize="13sp"
             android:textStyle="bold" />
