@@ -109,6 +109,15 @@ class FaturacaoWidget : AppWidgetProvider() {
     companion object {
         const val ACAO_SINCRONIZAR = "pt.multibrico.faturacao.SINCRONIZAR"
 
+        // Parte do dia de trabalho já passada (0..1): seg-sex 8h-17h, sábado 8h-13h, domingo não conta.
+        fun fracaoDoDia(c: Calendar): Double {
+            val dow = c.get(Calendar.DAY_OF_WEEK)
+            if (dow == Calendar.SUNDAY) return 0.0
+            val fimH = if (dow == Calendar.SATURDAY) 13.0 else 17.0
+            val agora = c.get(Calendar.HOUR_OF_DAY) + c.get(Calendar.MINUTE) / 60.0
+            return ((agora - 8.0) / (fimH - 8.0)).coerceIn(0.0, 1.0)
+        }
+
         // mostra uma mensagem na linha de baixo do widget, sem mexer no resto
         private fun aviso(ctx: Context, texto: String) {
             val mgr = AppWidgetManager.getInstance(ctx)
