@@ -78,14 +78,22 @@ class FaturacaoWidget : AppWidgetProvider() {
                         views.setTextViewText(R.id.w_obj_info, "")
                         views.setViewVisibility(R.id.w_grafico, View.GONE)
                     }
-                    // barra do mês da empresa
-                    val calM = Calendar.getInstance()
-                    val diaM = calM.get(Calendar.DAY_OF_MONTH)
-                    val diasMesM = calM.getActualMaximum(Calendar.DAY_OF_MONTH)
-                    // barra do mês do Pedro: dias passados e o que ele já faturou
-                    views.setTextViewText(R.id.w_mes_info, "Dia " + diaM + " de " + diasMesM + " · " + Fmt.curto(r.pedroMes))
-                    val objDia = if (r.pedroMeta > 0) r.pedroMeta / diasMesM else 0.0
-                      views.setImageViewBitmap(R.id.w_grafico_mes, Grafico.diasDoMes(r.pedroDias, diasMesM, diaM, objDia))
+                    // O meu dia: vendas de hoje contra o que falta vender por dia para chegar à meta.
+                    // O alvo calcula-se com o mês até ontem, para não mudar ao longo do dia.
+                    val calD = Calendar.getInstance()
+                    val diaD = calD.get(Calendar.DAY_OF_MONTH)
+                    val diasMesD = calD.getActualMaximum(Calendar.DAY_OF_MONTH)
+                    val alvoDia = if (r.pedroMeta > 0)
+                        ((r.pedroMeta - (r.pedroMes - r.pedroHoje)) / (diasMesD - diaD + 1)).coerceAtLeast(0.0)
+                    else 0.0
+                    if (alvoDia > 0) {
+                        views.setTextViewText(R.id.w_mes_info, Fmt.curto(r.pedroHoje) + " de " + Fmt.curto(alvoDia))
+                        views.setImageViewBitmap(R.id.w_grafico_mes, Progresso.barra(r.pedroHoje, alvoDia, alvoDia * fracaoDoDia(calD), "previsto agora", "objetivo do dia"))
+                        views.setViewVisibility(R.id.w_grafico_mes, View.VISIBLE)
+                    } else {
+                        views.setTextViewText(R.id.w_mes_info, if (r.pedroMeta > 0) "Objetivo do mês atingido" else "Sem objetivo definido")
+                        views.setViewVisibility(R.id.w_grafico_mes, View.GONE)
+                    }
                     views.setTextViewText(R.id.w_hora, "● " + Fmt.hora())
                 } catch (e: Exception) {
                     views.setTextViewText(R.id.w_hora, "Sem ligação. Toca para tentar de novo.")
