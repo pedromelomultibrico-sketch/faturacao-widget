@@ -9,6 +9,9 @@ import java.util.Locale
 
 data class MesValor(val mes: String, val total: Double)
 
+// Total de cada dia do mês atual (vem em "pedroDias" do resumo; vazio se o servidor não o enviar).
+data class DiaValor(val dia: Int, val total: Double)
+
 data class Resumo(
     val hoje: Double,
     val mes: Double,
