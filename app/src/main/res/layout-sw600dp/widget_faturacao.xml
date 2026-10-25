@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Widget Faturação — versão TABLET (sw600dp): "O meu objetivo" e "O meu dia" lado a lado. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/w_fundo"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="12dp"
+    android:paddingBottom="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="4dp"
+            android:layout_height="16dp"
+            android:background="@drawable/w_acento" />
+        <TextView
+            android:id="@+id/w_titulo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="8dp"
+            android:letterSpacing="0.1"
+            android:text="FATURAÇÃO"
+            android:textColor="#22180F"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/w_hora"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="220dp"
+            android:background="@drawable/w_chip"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingLeft="9dp"
+            android:paddingRight="9dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:text="…"
+            android:textColor="#4A4038"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/w_atualizar"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginLeft="8dp"
+            android:background="@drawable/w_botao"
+            android:gravity="center"
+            android:shadowColor="#66000000"
+            android:shadowDy="2"
+            android:shadowRadius="3"
+            android:text="↻"
+            android:textColor="#FFFFFF"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- linha de cima: Hoje | Este mês | anel + Pedro -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hoje"
+                android:textColor="#5E5248"
+                android:textSize="11sp" />
+            <TextView
+                android:id="@+id/w_dia_val"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:shadowColor="#55000000"
+                android:shadowDy="3"
+                android:shadowRadius="4"
+                android:text="—"
+                android:textColor="#C8102E"
+                android:textSize="23sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Este mês"
+                android:textColor="#5E5248"
+                android:textSize="11sp" />
+            <TextView
+                android:id="@+id/w_mes_val"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:shadowColor="#55000000"
+                android:shadowDy="3"
+                android:shadowRadius="4"
+                android:text="—"
+                android:textColor="#22180F"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/w_anel"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:scaleType="fitCenter" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.6"
+            android:layout_marginLeft="12dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pedro Melo"
+                android:textColor="#22180F"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/w_ped_linha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text=""
+                android:textColor="#4A4038"
+                android:textSize="11.5sp" />
+            <TextView
+                android:id="@+id/w_estado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/w_chip_vermelho"
+                android:maxLines="1"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:text=""
+                android:textColor="#FFFFFF"
+                android:textSize="11.5sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/w_ritmo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:maxLines="2"
+                android:text=""
+                android:textColor="#4A4038"
+                android:textSize="11sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/w_linha" />
+
+    <!-- gráficos lado a lado -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="8dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="O meu objetivo"
+                    android:textColor="#22180F"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/w_obj_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text=""
+                    android:textColor="#4A4038"
+                    android:textSize="11sp" />
+            </LinearLayout>
+            <ImageView
+                android:id="@+id/w_grafico"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="2dp"
+                android:scaleType="fitCenter" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="8dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="O meu dia"
+                    android:textColor="#22180F"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/w_mes_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text=""
+                    android:textColor="#4A4038"
+                    android:textSize="11sp" />
+            </LinearLayout>
+            <ImageView
+                android:id="@+id/w_grafico_mes"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="2dp"
+                android:scaleType="fitCenter" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
